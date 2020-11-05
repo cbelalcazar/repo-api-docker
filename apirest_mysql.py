@@ -7,7 +7,6 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
-
 # Config MySQL
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -25,6 +24,7 @@ def get_books():
     cur.execute("SELECT * from books")
     books = cur.fetchall()
     return jsonify({'books': books})
+
 # Get one book by id
 # For testing: curl -i http://localhost:5000/books/2
 @app.route('/books/<int:book_id>', methods=['GET'])
@@ -34,8 +34,8 @@ def get_book(book_id):
     cur.execute("SELECT * from books WHERE id="+str(book_id))
     book = cur.fetchall()
     return jsonify({'book': book[0]})
-# Add new book
 
+# Add new book
 # For testing: curl -i -H "Content-Type: application/json" -X POST -d '{"title":"El libro"}' http://localhost:5000/books
 @app.route('/books', methods=['POST'])
 def create_book():
@@ -53,7 +53,6 @@ def create_book():
 # For testing: curl -i -H "Content-Type: application/json" -X PUT -d '{"author":"Jorgito"}' http://localhost:5000/books/2
 @app.route('/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
-    
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM books where id="+str(book_id))
     book = cur.fetchall()
@@ -64,6 +63,7 @@ def update_book(book_id):
     cur.execute("UPDATE books SET title =%s, description =%s ,author= %s WHERE id=%s",(title,description,author,book_id))
     mysql.connection.commit()
     return jsonify({'book': book[0]})
+
 # Delete a Book
 # For testing: curl -i -H "Content-Type: application/json" -X DELETE http://localhost:5000/books/1
 @app.route('/books/<int:book_id>', methods=['DELETE'])
