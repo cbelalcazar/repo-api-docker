@@ -9,6 +9,7 @@ sudo yum install python3-pip -y -y
 pip3 install Flask
 
 #Install MySQL
+sudo yum install wget -y
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
 sudo yum install mysql-server -y
