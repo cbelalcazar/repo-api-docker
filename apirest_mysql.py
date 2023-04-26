@@ -43,7 +43,7 @@ def create_book():
         abort(400)
     title = request.json.get('title', "")
     description = request.json.get('description', "")
-    author = request.json.get('title', "")
+    author = request.json.get('author', "")
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO books(title,description,author) VALUES(%s,%s,%s)",(title,description,author))
     mysql.connection.commit()

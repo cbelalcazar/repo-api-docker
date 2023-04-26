@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :servidorRest do |servidorRest|
-    servidorRest.vm.box = "centos/stream8"
+    servidorRest.vm.box = "generic/centos8"
     servidorRest.vm.network :private_network, ip: "192.168.60.3"
     servidorRest.vm.provision "file", source: "apirest_mysql.py", destination: "/home/vagrant/apirest_mysql.py"
     servidorRest.vm.provision "file", source: "init.sql", destination: "/home/vagrant/init.sql"
