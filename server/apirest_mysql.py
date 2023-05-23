@@ -8,9 +8,10 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 # Config MySQL
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = 'db'  # 'db' is the name of your MySQL service in docker-compose.yml
+app.config['MYSQL_PORT'] = 3306  # The port you exposed for MySQL
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'myflaskapp'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -74,4 +75,4 @@ def delete_book(book_id):
     return jsonify({'result': True})
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

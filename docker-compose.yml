@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myflaskapp
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 3311:3306
+    networks:
+      - my_network
+
+  web:
+    build: ./server
+    command: python3 -u /code/apirest_mysql.py
+    volumes:
+      - ./server:/code
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+  client:
+    build: ./client
+    command: python3 -u /code/client.py
+    volumes:
+      - ./client:/code
+    depends_on:
+      - web
+    networks:
+      - my_network
+
+networks:
+  my_network:
